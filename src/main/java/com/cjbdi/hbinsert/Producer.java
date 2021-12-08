@@ -54,7 +54,11 @@ public class Producer{
 //					continue;
 //				}
 					DataStore ds = dsm.getDataStore(key);
-					ds.open();
+					try {
+						ds.open();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					int fileCount = ds.fileCount();
 					for (int i = 0; i < fileCount; i++) {
 						try {
