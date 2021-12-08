@@ -4,83 +4,88 @@ import com.alibaba.fastjson.JSONObject;
 import com.cjbdi.gfs.data.DataBlockFile;
 import com.cjbdi.gfs.data.DataStore;
 import com.cjbdi.gfs.data.DataStoreManager;
-import com.cjbdi.utils.StringUtil;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringSerializer;
 import java.io.File;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Properties;
 
-public class Producer extends Thread{
+public class Producer{
 	private static UnzipUtil unzipper = new UnzipUtil();
 	private static Config config = new Config();
 
 	public static void main(String [] args) {
 		readFile(args);
-//		readFile();
 	}
-	/**
-	 * produce the data and send to queue in MainExtract
-	 */	
+
 	public static void readFile(String [] args) {
-		System.out.println("start produce data");
+		//kafka配置
+		//创建 kafka 生产者
+		Properties properties = new Properties();
+		properties.put("acks", "all");
+		properties.put("retries", 0);
+		properties.put("compression.type", "snappy");
+		properties.put("batch.size", 16384);
+		properties.put("key.serializer", StringSerializer.class.getName());
+		properties.put("value.serializer",StringSerializer.class.getName());
+//		properties.put("bootstrap.servers", "rookiex01:9092");
+		properties.put("bootstrap.servers", "192.1.48.233:9092");
+		KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
+		//rootPath:Users/xuyuanhang/Desktop/hyws2
 		String rootPath = args[0];
-		String savePath = args[1];
 		File dataPath = new File(rootPath);
 		long total = 0;
-		int a=1;
-		int b= 0;
-		File[] subPath = unzipper.fileWalker(dataPath, config.start_dir, config.end_dir);
+		long a=1;
+		long b= 0;
 		String text = "";
+
+		File[] subPath = unzipper.fileWalker(dataPath, config.start_dir, config.end_dir);
 		for(File dsmPath:subPath) {
-			//me
-			System.out.println("dsmPath: " + dsmPath);
-			DataStoreManager dsm = new DataStoreManager(dsmPath, true);
-//			if (dsm==null||!dsm.path().contains(dataSet)) continue;
-			dsm.open();
-			Map<String, DataStore> dsList = dsm.dataStores();
-			for(String key:dsList.keySet()) {
-				//me
-				System.out.println("key" + key);
+			if(dsmPath !=null) {
+				System.out.println("dsmPath: " + dsmPath);
+				DataStoreManager dsm = new DataStoreManager(dsmPath, true);
+				dsm.open();
+				Map<String, DataStore> dsList = dsm.dataStores();
+				for (String key : dsList.keySet()) {
+					//me
+					System.out.println("key: " + key);
 //				if (!key.contains("db_ms")) {
 //					continue;
 //				}
-				DataStore ds = dsm.getDataStore(key);
-				ds.open();
-				int fileCount = ds.fileCount();
-//				if (ds.path().endsWith("/5")||ds.path().endsWith("/6")||ds.path().endsWith("/7")||ds.path().endsWith("/8")) {
-					System.out.println(ds.path());
-					System.out.println(fileCount);
+					DataStore ds = dsm.getDataStore(key);
+					ds.open();
+					int fileCount = ds.fileCount();
 					for (int i = 0; i < fileCount; i++) {
 						try {
 							DataBlockFile dbf = ds.getDataFile(i);
 							DataBlockFile.Iterator fileitor = dbf.iterator();
 							while (fileitor.hasNext()) {
 								total += 1;
-								if (total % 10000 == 0) {
+								if (total % 100000 == 0) {
 									System.out.println("已扫描的文件数量: " + total);
 								}
 								try {
 									fileitor.next();
 									Ws singleWs = unzipper.unzip(fileitor, dsmPath.toString(), key);
-									if (singleWs != null && !StringUtil.isEmpty(singleWs.c_wsText)) {
+									if (singleWs != null) {
 										JSONObject jsonObject = new JSONObject();
 										jsonObject.put("c_stm", singleWs.c_stm);
-										jsonObject.put("db", singleWs.db);
-										jsonObject.put("c_rowkey", singleWs.c_rowkey);
-										jsonObject.put("c_wsText", singleWs.c_wsText);
-										jsonObject.put("fbId", singleWs.fbId);
-										text += JSONObject.toJSONString(jsonObject) + "\n";
-										if (a % 1000 == 0) {
-											System.out.println(ds.path());
-											System.out.println("符合要求的文件数量: " + a);
-										}
-										if (a % 10000 == 0) {
-											b++;
-											String jsonTextName = savePath + "jsonData_" + b;
-											CreateFileUtil.createJsonFile(text, jsonTextName);
-											text = "";
-										}
+										jsonObject.put("c_ajbs", singleWs.c_ajbs);
+										jsonObject.put("c_mc", singleWs.c_mc);
+										jsonObject.put("c_nr", singleWs.c_nr);
+										jsonObject.put("c_FILE", singleWs.c_file);
+										text = JSONObject.toJSONString(jsonObject) + "\n";
 										a += 1;
+											b++;
+//											CreateFileUtil.createJsonFile(text, jsonTextName);
+//											System.out.println(text);
+											try {
+												producer.send(new ProducerRecord<String, String>("t01", singleWs.c_nr));
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
+
 									}
 								} catch (Exception e) {
 								}
@@ -90,28 +95,15 @@ public class Producer extends Thread{
 						}
 					}
 //				}
-				ds.close();
+					ds.close();
+				}
+				dsm.close();
+
 			}
-			dsm.close();
 		}
-		if (!StringUtil.isEmpty(text)) {
-			b++;
-			String jsonTextName = savePath + "jsonData_" + b;
-			CreateFileUtil.createJsonFile(text, jsonTextName);
-		}
+		producer.close();
+
 	}
 
-	public static boolean isMatch(String content) {
-		if (StringUtil.isEmpty(content)) return false;
-		if (content != null) {
-			String pattern = "民.{0,10}事.{0,10}(裁|判).{0,10}(定|决).{0,10}书";
-			Pattern r = Pattern.compile(pattern);
-			Matcher matcher = r.matcher(content);
-			if (matcher.find()) {
-				return true;
-			}
-		}
-		return false;
-	}
 }
 

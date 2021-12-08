@@ -2,6 +2,7 @@ package com.cjbdi.hbinsert;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -81,7 +82,7 @@ public class UnzipUtil {
 	 * unzip the DataBlockFile
 	 * 
 	 * @param fileitor: a DataBlockFile.Iterator object
-	 * @param dsmPath: the DataStoreManager path
+	 * @param dsmPath: the DataStoreManager dfpath
 	 * @param dsName: the DataStore name / name of case type
 	 * @return A Ws object
 	 */
@@ -95,11 +96,12 @@ public class UnzipUtil {
 		String c_wsText = "";
 		String db = "";
 		String schema = "";
-		String fbId = "";
+		String c_file = "";
 		try {
 			name = new String(fileitor.name(), "UTF8");
 			byte[] stream = fileitor.unzippedData();
 			String[] name_split = name.split("\\:");
+			c_file = Base64.getEncoder().encodeToString(stream);
 			c_stm = name_split[0].trim();
 			c_ajbs = name_split[1].trim();
 			c_mc = name_split[3].trim();
@@ -111,29 +113,29 @@ public class UnzipUtil {
 			if (c_stm.isEmpty()) {
 				c_stm = name_split[1].trim(); // 此文书为"09"法标的文书
 			}
-			DocType type = DocDetector.detect(stream);
-			if (type == null) {
-				if (CharsetUtil.isUTF8(stream)) {
-					c_wsText = new String(stream, "UTF8");
-				} else {
-					c_wsText = new String(stream, "GBK");
-				}
-			} else {
-				try {
-					Doc2Text dt = new Doc2Text();
-					if (!dt.handleData(stream)) {
-
-					}
-					c_wsText = dt.getPlainText();
-				}catch (Exception e) {
-				}
-			}
-			if (c_wsText == null || c_wsText.isEmpty()) {
-				c_wsText = "";
-			}
+//			DocType type = DocDetector.detect(stream);
+//			if (type == null) {
+//				if (CharsetUtil.isUTF8(stream)) {
+//					c_wsText = new String(stream, "UTF8");
+//				} else {
+//					c_wsText = new String(stream, "GBK");
+//				}
+//			} else {
+//				try {
+//					Doc2Text dt = new Doc2Text();
+//					if (!dt.handleData(stream)) {
+//
+//					}
+//					c_wsText = dt.getPlainText();
+//				}catch (Exception e) {
+//				}
+//			}
+//			if (c_wsText == null || c_wsText.isEmpty()) {
+//				c_wsText = "";
+//			}
 		} catch (Exception e) {
 		}
-		Ws wsObject = new Ws(db, schema, c_rowkey, c_stm, c_wsText, c_ajbs, c_mc, c_nr, fbId);
+		Ws wsObject = new Ws(db, schema, c_rowkey, c_stm, c_wsText, c_ajbs, c_mc, c_nr, c_file);
 		return wsObject;
 	}
 }

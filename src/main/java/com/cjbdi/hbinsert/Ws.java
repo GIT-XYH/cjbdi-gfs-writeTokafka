@@ -1,8 +1,15 @@
 package com.cjbdi.hbinsert;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
+
+import java.util.Base64;
 import java.util.Hashtable;
 import java.util.Map;
-
+@Data
+@ToString
+@AllArgsConstructor
 public class Ws {
 	public String db = "";
 	public String schema = "";
@@ -12,19 +19,7 @@ public class Ws {
 	public String c_ajbs = "";
 	public String c_mc = "";
 	public String c_nr = "";
-	public String fbId = "";
-
-	public Ws(String db, String schema, String c_rowkey, String c_stm, String c_wsText, String c_ajbs, String c_mc, String c_nr, String fbId) {
-		this.db = db;
-		this.schema = schema;
-		this.c_rowkey = c_rowkey;
-		this.c_stm = c_stm;
-		this.c_wsText = c_wsText;
-		this.c_ajbs = c_ajbs;
-		this.c_mc = c_mc;
-		this.c_nr = c_nr;
-		this.fbId = fbId;
-	}
+	public String c_file = "";
 	
 	public Map<String, String> toHBaseInsertHashtable() {
 		Map<String, String> inLayer = new Hashtable<String, String>();

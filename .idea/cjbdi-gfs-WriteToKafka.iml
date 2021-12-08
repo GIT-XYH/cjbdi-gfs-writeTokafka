@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="Maven: com.cjbdi:shesu-wsdoc:0.0.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/shesu-wsdoc-0.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.cjbdi:cjbdi-base:0.0.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/cjbdi-base-0.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.cjbdi:cjbdi-gfs:0.0.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/cjbdi-gfs-0.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.cjbdi:cjbdi-fp-docs:0.0.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/cjbdi-fp-docs-0.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.cjbdi:fastjson:1.2.62">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/fastjson-1.2.62.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Maven: javax.xml.soap:javax.xml.soap-api:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.axis2:axis2:1.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.kafka:kafka-clients:3.0.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.github.luben:zstd-jni:1.5.0-2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.lz4:lz4-java:1.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.xerial.snappy:snappy-java:1.1.8.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
+    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.22" level="project" />
+  </component>
+</module>

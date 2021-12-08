@@ -1,6 +1,7 @@
-D:\sunxiaorui\gfs\src\main\java\com\cjbdi\hbinsert\CreateFileUtil.java
-D:\sunxiaorui\gfs\src\main\java\com\cjbdi\hbinsert\Ws.java
-D:\sunxiaorui\gfs\src\main\java\com\cjbdi\hbinsert\Producer.java
-D:\sunxiaorui\gfs\src\main\java\com\cjbdi\hbinsert\Config.java
-D:\sunxiaorui\gfs\src\main\java\com\cjbdi\hbinsert\UnzipUtil.java
-D:\sunxiaorui\gfs\src\main\java\com\cjbdi\hbinsert\JsonFormatTool.java
+/Users/xuyuanhang/Desktop/code/cjbdi-gfs-WriteToKafka/src/main/java/com/cjbdi/hbinsert/JsonFormatTool.java
+/Users/xuyuanhang/Desktop/code/cjbdi-gfs-WriteToKafka/src/main/java/com/cjbdi/hbinsert/Producer.java
+/Users/xuyuanhang/Desktop/code/cjbdi-gfs-WriteToKafka/src/main/java/test/ArgsTest.java
+/Users/xuyuanhang/Desktop/code/cjbdi-gfs-WriteToKafka/src/main/java/com/cjbdi/hbinsert/UnzipUtil.java
+/Users/xuyuanhang/Desktop/code/cjbdi-gfs-WriteToKafka/src/main/java/com/cjbdi/hbinsert/Ws.java
+/Users/xuyuanhang/Desktop/code/cjbdi-gfs-WriteToKafka/src/main/java/com/cjbdi/hbinsert/CreateFileUtil.java
+/Users/xuyuanhang/Desktop/code/cjbdi-gfs-WriteToKafka/src/main/java/com/cjbdi/hbinsert/Config.java

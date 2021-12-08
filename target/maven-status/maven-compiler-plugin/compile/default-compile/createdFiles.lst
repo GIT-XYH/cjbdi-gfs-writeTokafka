@@ -1,0 +1,8 @@
+com/cjbdi/hbinsert/CreateFileUtil.class
+com/cjbdi/hbinsert/JsonFormatTool.class
+com/cjbdi/hbinsert/Config.class
+com/cjbdi/hbinsert/Ws.class
+com/cjbdi/hbinsert/UnzipUtil.class
+com/cjbdi/hbinsert/Producer.class
+com/cjbdi/hbinsert/DsmGroup.class
+test/ArgsTest.class
