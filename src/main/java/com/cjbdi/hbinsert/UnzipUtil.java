@@ -86,57 +86,36 @@ public class UnzipUtil {
 	 * @param dsName: the DataStore name / name of case type
 	 * @return A Ws object
 	 */
-	public Ws unzip(DataBlockFile.Iterator fileitor, String dsmPath, String dsName) {
-		String name = "";
-		String c_stm = "";
-		String c_ajbs = "";
-		String c_mc = "";
-		String c_nr = "";
-		String c_rowkey = "";
-		String c_wsText = "";
-		String db = "";
+	public WsWithBase64File unzip(DataBlockFile.Iterator fileitor, String dsmPath, String dsName) {
+		String base64File = "";
+		String database = "";
+		String fbId = "";
+		String host = "";
 		String schema = "";
-		String c_file = "";
+		String t_c_baah = "";
+		String t_c_jbfymc = "";
+		String t_c_stm = "";
+		String t_d_sarq = "";
+		String t_n_jbfy = "";
+		String ws_c_mc = "";
+		String ws_c_nr = "";
+		String name = "";
 		try {
 			name = new String(fileitor.name(), "UTF8");
 			byte[] stream = fileitor.unzippedData();
 			String[] name_split = name.split("\\:");
-			c_file = Base64.getEncoder().encodeToString(stream);
-			c_stm = name_split[0].trim();
-			c_ajbs = name_split[1].trim();
-			c_mc = name_split[3].trim();
-			c_nr = name_split[4].trim();
-			c_rowkey = c_stm + ((c_stm+c_mc+c_nr).hashCode()+"000000").replace("-", "").substring(0,6); //rowkey生成规则
-			String[] path_split = dsmPath.split("\\/");
-			db = path_split[path_split.length - 1].trim();
-			schema = dsName.split("\\/")[0].trim();
-			if (c_stm.isEmpty()) {
-				c_stm = name_split[1].trim(); // 此文书为"09"法标的文书
+			base64File = Base64.getEncoder().encodeToString(stream);
+			t_c_stm = name_split[0].trim();
+			ws_c_mc = name_split[3].trim();
+			ws_c_nr = name_split[4].trim();
+			if (t_c_stm.isEmpty()) {
+				t_c_stm = name_split[1].trim(); // 此文书为"09"法标的文书
 			}
-//			DocType type = DocDetector.detect(stream);
-//			if (type == null) {
-//				if (CharsetUtil.isUTF8(stream)) {
-//					c_wsText = new String(stream, "UTF8");
-//				} else {
-//					c_wsText = new String(stream, "GBK");
-//				}
-//			} else {
-//				try {
-//					Doc2Text dt = new Doc2Text();
-//					if (!dt.handleData(stream)) {
-//
-//					}
-//					c_wsText = dt.getPlainText();
-//				}catch (Exception e) {
-//				}
-//			}
-//			if (c_wsText == null || c_wsText.isEmpty()) {
-//				c_wsText = "";
-//			}
 		} catch (Exception e) {
 		}
-		Ws wsObject = new Ws(db, schema, c_rowkey, c_stm, c_wsText, c_ajbs, c_mc, c_nr, c_file);
-		return wsObject;
+		Ws wsObject = new Ws(database, fbId, host, schema, t_c_baah, t_c_jbfymc, t_c_stm, t_d_sarq, t_n_jbfy, ws_c_mc, ws_c_nr);
+		WsWithBase64File wsWithBase64File = new WsWithBase64File(wsObject, base64File);
+		return wsWithBase64File;
 	}
 }
 

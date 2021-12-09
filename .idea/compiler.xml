@@ -12,5 +12,8 @@
         <module name="cjbdi-gfs-json" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cjbdi-gfs-WriteToKafka" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

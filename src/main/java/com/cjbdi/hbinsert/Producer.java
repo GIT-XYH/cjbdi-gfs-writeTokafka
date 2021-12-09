@@ -30,7 +30,7 @@ public class Producer{
 		properties.put("key.serializer", StringSerializer.class.getName());
 		properties.put("value.serializer",StringSerializer.class.getName());
 //		properties.put("bootstrap.servers", "rookiex01:9092");
-		properties.put("bootstrap.servers", "192.1.48.233:9092");
+		properties.put("bootstrap.servers", "192.158.5.220:9092");
 		KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
 		//rootPath:Users/xuyuanhang/Desktop/hyws2
 		String rootPath = args[0];
@@ -71,21 +71,19 @@ public class Producer{
 								}
 								try {
 									fileitor.next();
-									Ws singleWs = unzipper.unzip(fileitor, dsmPath.toString(), key);
+									WsWithBase64File singleWs = unzipper.unzip(fileitor, dsmPath.toString(), key);
 									if (singleWs != null) {
 										JSONObject jsonObject = new JSONObject();
-										jsonObject.put("c_stm", singleWs.c_stm);
-										jsonObject.put("c_ajbs", singleWs.c_ajbs);
-										jsonObject.put("c_mc", singleWs.c_mc);
-										jsonObject.put("c_nr", singleWs.c_nr);
-										jsonObject.put("c_FILE", singleWs.c_file);
+										jsonObject.put("base64File", singleWs.getBase64File());
+										jsonObject.put("wsBean", singleWs.getWsBean());
 										text = JSONObject.toJSONString(jsonObject) + "\n";
 										a += 1;
 											b++;
 //											CreateFileUtil.createJsonFile(text, jsonTextName);
 //											System.out.println(text);
 											try {
-												producer.send(new ProducerRecord<String, String>("t01", singleWs.c_nr));
+												producer.send(new ProducerRecord<String, String>("cjbdi-ws01-r1p20", text));
+//												producer.send(new ProducerRecord<String, String>("test3", text));
 											} catch (Exception e) {
 												e.printStackTrace();
 											}

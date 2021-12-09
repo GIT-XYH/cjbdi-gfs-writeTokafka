@@ -11,25 +11,25 @@ import java.util.Map;
 @ToString
 @AllArgsConstructor
 public class Ws {
-	public String db = "";
+	public String database = "";
+	public String fbId = "";
+	public String host = "";
 	public String schema = "";
-	public String c_rowkey = "";
-	public String c_stm = "";
-	public String c_wsText = "";
-	public String c_ajbs = "";
-	public String c_mc = "";
-	public String c_nr = "";
-	public String c_file = "";
-	
-	public Map<String, String> toHBaseInsertHashtable() {
-		Map<String, String> inLayer = new Hashtable<String, String>();
-		inLayer.put("db", this.db);
-		inLayer.put("schema", this.schema);
-		inLayer.put("c_stm", this.c_stm);
-		inLayer.put("c_ajbs", this.c_ajbs);
-		inLayer.put("c_mc", this.c_mc);
-		inLayer.put("c_nr", this.c_nr);
-		inLayer.put("c_wsText", this.c_wsText);
-		return inLayer;
-	}
+	public String t_c_baah = "";
+	public String t_c_jbfymc = "";
+	public String t_c_stm = "";
+	public String t_d_sarq = "";
+	public String t_n_jbfy = "";
+	public String ws_c_mc = "";
+	public String ws_c_nr = "";
+
+//	public Map<String, String> toHBaseInsertHashtable() {
+//		Map<String, String> inLayer = new Hashtable<String, String>();
+//		inLayer.put("db", this.database);
+//		inLayer.put("schema", this.schema);
+//		inLayer.put("c_stm", this.t_c_stm);
+//		inLayer.put("c_mc", this.ws_c_mc);
+//		inLayer.put("c_nr", this.ws_c_nr);
+//		return inLayer;
+//	}
 }
